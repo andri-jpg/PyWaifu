@@ -1,4 +1,4 @@
-# AI-Waifu-mini
+# AI-Waifu-png
 
 # Readme in progress
 All of this run on your local PC

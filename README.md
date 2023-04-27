@@ -23,10 +23,12 @@ cd ./AIwaifu-mini
 
 ```bash
 # Install pytorch 
+
 # Nvidia GPU only
 
 # CUDA 11.7
 pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
+
 # CPU only
 pip install torch==1.13.1+cpu torchvision==0.14.1+cpu torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cpu
 

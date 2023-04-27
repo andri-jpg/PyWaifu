@@ -22,6 +22,15 @@ cd ./AIwaifu-mini
 ```
 
 ```bash
+# Install pytorch 
+# Nvidia GPU only
+# CUDA 11.7
+
+conda install pytorch==1.13.0 torchvision==0.14.0 torchaudio==0.13.0 pytorch-cuda=11.7 -c pytorch -c nvidia
+
+# CPU Only
+
+conda install pytorch==1.13.0 torchvision==0.14.0 torchaudio==0.13.0 cpuonly -c pytorch
 pip install -r ./requirements.txt
 
 # You need to install the monotonic_align module for vits to work

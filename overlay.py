@@ -1,3 +1,5 @@
+# WORK IN PROGRESS
+# GUI VERSION
 import time
 import tkinter as tk
 import numpy as np

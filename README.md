@@ -17,8 +17,8 @@ or 16 gb ram(CPU mode)
 - clone the repo & install packages
 - venv or miniconda(optional but strongly recommended, because I haven't cleaned up some unused dependencies)
 ```bash
-git clone https://github.com/andri-jpg/AIwaifu-mini.git
-cd ./AIwaifu-mini
+git clone https://github.com/andri-jpg/AIwaifu-png.git
+cd ./AIwaifu-png
 ```
 
 ```bash

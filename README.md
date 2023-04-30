@@ -1,5 +1,5 @@
 # AI-Waifu-png
-
+Demo : https://youtu.be/TzU27v9Hf6Q
 # Readme in progress
 All of this run on your local PC
 need atleast 4gb vram of nvidia gpu and 12gb ram(GPU mode)

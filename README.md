@@ -6,7 +6,7 @@ need atleast 4gb vram of nvidia gpu and 12gb ram(GPU mode)
 or 16 gb ram(CPU mode)
 ## Requirements
 - git
-- python > 3.7 <=3.10
+- python == 3.9
 - Veadotube mini [Download](https://olmewe.itch.io/veadotube-mini?download)
 - Virtual audio cable, We recommend using VB-CABLE as a virtual cable solution [VB-cable](https://vb-audio.com/Cable/index.htm)
 - Google Chrome [Download](https://www.google.com/chrome/)

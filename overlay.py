@@ -1,3 +1,6 @@
+# WORK IN PROGRESS
+# GUI VERSION
+# THE PROBLEM IS ON MAIN LOOP
 import time
 import tkinter as tk
 import numpy as np

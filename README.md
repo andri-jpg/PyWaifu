@@ -1,12 +1,12 @@
-# AI-Waifu-mini
-
+# AI-Waifu-png
+Demo : https://youtu.be/TzU27v9Hf6Q
 # Readme in progress
 All of this run on your local PC
 need atleast 4gb vram of nvidia gpu and 12gb ram(GPU mode)
 or 16 gb ram(CPU mode)
 ## Requirements
 - git
-- python > 3.7 <=3.10
+- python == 3.9
 - Veadotube mini [Download](https://olmewe.itch.io/veadotube-mini?download)
 - Virtual audio cable, We recommend using VB-CABLE as a virtual cable solution [VB-cable](https://vb-audio.com/Cable/index.htm)
 - Google Chrome [Download](https://www.google.com/chrome/)
@@ -17,11 +17,23 @@ or 16 gb ram(CPU mode)
 - clone the repo & install packages
 - venv or miniconda(optional but strongly recommended, because I haven't cleaned up some unused dependencies)
 ```bash
-git clone https://github.com/andri-jpg/AIwaifu-mini.git
-cd ./AIwaifu-mini
+git clone https://github.com/andri-jpg/AIwaifu-png.git
+cd ./AIwaifu-png
 ```
 
 ```bash
+# Install pytorch 
+
+# Nvidia GPU only
+
+# CUDA 11.7
+pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
+
+# CPU only
+pip install torch==1.13.1+cpu torchvision==0.14.1+cpu torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cpu
+
+
+######################################
 pip install -r ./requirements.txt
 
 # You need to install the monotonic_align module for vits to work

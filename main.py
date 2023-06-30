@@ -117,10 +117,7 @@ while True:
         # Translate English response to Japanese
         jp_answer = tl.en_jp(en_answer)
 
-        # Convert Japanese response to speech and play audio
-        ts.convert(jp_answer)
-        if jp_answer is not None:
-            play_audio()
+
 
         # If chatbot has just been loaded, prompt user to load configuration
         if jp_answer is None:
@@ -132,12 +129,17 @@ while True:
         # Get text input field and send user input
         text_input = driver.find_element(By.XPATH, '//*[@id="cht_inp"]')
         text_input.click()
+        # Convert Japanese response to speech and play audio
+        ts.convert(jp_answer)
+        os.system('cls')
         print(en_answer)
+        if jp_answer is not None:
+            play_audio()
         user_input = input("Enter input, type 'exit' to exit: ")
         if user_input.lower() == 'exit':
             break
         text_input.send_keys(user_input)
         text_input.send_keys('\ue007')
-
+        print("processing.....")
 
 

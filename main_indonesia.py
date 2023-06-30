@@ -8,13 +8,20 @@ import pyaudio
 import soundfile as sf
 import scipy.io.wavfile as wavfile
 import logging
-from selenium.webdriver.remote.remote_connection import LOGGER
-
+import os
+#from selenium.webdriver.remote.remote_connection import LOGGER
+#from urllib3.connectionpool import log as urllibLogger
 # Set logging level to warning
-LOGGER.setLevel(logging.WARNING)
-
+#LOGGER.setLevel(logging.WARNING)
+#urllibLogger.setLevel(logging.WARNING)
 # Initialize text-to-speech model
-ts = tts_infer(model_name='chihiro') # change model_name to .pth file in model folder
+# Set the threshold for selenium to WARNING
+from selenium.webdriver.remote.remote_connection import LOGGER as seleniumLogger
+seleniumLogger.setLevel(logging.WARNING)
+# Set the threshold for urllib3 to WARNING
+from urllib3.connectionpool import log as urllibLogger
+urllibLogger.setLevel(logging.WARNING)
+ts = tts_infer(model_name='herta') # change model_name to .pth file in model folder
 
 # Initialize translator
 tl = translator(indonesian=True)
@@ -105,7 +112,7 @@ while True:
     else:
         if_busy = False
         
-    time.sleep(0.01)
+    time.sleep(0.5)
 
     # If chatbot is busy generating response, continue loop
     if if_busy:
@@ -120,10 +127,7 @@ while True:
         # Translate English response to Indonesian
         id_result = tl.en_id(en_answer)
 
-        # Convert Japanese response to speech and play audio
-        ts.convert(jp_answer)
-        if jp_answer is not None:
-            play_audio()
+
 
         # If chatbot has just been loaded, prompt user to load configuration
         if id_result is None:
@@ -132,16 +136,20 @@ while True:
             if user_input.lower() == 'exit':
                 break
 
-        # Get text input field and send user input
         text_input = driver.find_element(By.XPATH, '//*[@id="cht_inp"]')
         text_input.click()
+        ts.convert(jp_answer)
+        os.system('cls')
         print(id_result)
+        if jp_answer is not None:
+            play_audio()
         user_input = input("Masukkan input, ketik 'exit' untuk keluar: ")
         user_input = tl.id_en(user_input)
         if user_input.lower() == 'exit':
             break
         text_input.send_keys(user_input)
         text_input.send_keys('\ue007')
+        print("Memproses input user....")
 
 
 

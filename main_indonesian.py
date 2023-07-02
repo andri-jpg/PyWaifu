@@ -14,7 +14,7 @@ import re
 ##### Configuration #####
 # Change the parameters below to use your desired model and customize names
 generator = ChainingModel(
-    model="RedPajama-INCITE-Chat-3B-v1-q5_1.bin", # Replace with the name of your desired model
+    model="RedPajama-INCITE-Chat-3B-v1-q5_1", # Replace with the name of your desired model
     name='andri',  # Replace with your preferred name
     assistant_name='herta')  # Replace with the desired name for the assistant
 

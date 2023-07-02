@@ -1,4 +1,5 @@
 from pathlib import Path
+from downloader import ModelDownloader
 from llm_rs.langchain import RustformersLLM
 from llm_rs import Bloom, SessionConfig, GenerationConfig, ContainerType, QuantizationType
 from langchain import PromptTemplate
@@ -8,14 +9,20 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from pathlib import Path
 class ChainingModel:
     def __init__(self, model, name, assistant_name):
+        self.model_download = ModelDownloader()
+        meta = f"{model}.meta"
+        model = f"{model}.bin"
         self.model = model
         if not Path(model).is_file():
-            raise Exception("Large language Model not found on PyWaifu folder.")
+            self.model_download.ask_download(f"https://huggingface.co/rustformers/redpajama-3b-ggml/resolve/main/RedPajama-INCITE-Chat-3B-v1-q5_1.bin", model)
+        if not Path(meta).is_file():
+            self.model_download.ask_download(f"https://huggingface.co/rustformers/redpajama-3b-ggml/resolve/main/RedPajama-INCITE-Chat-3B-v1-q5_1.meta", meta)
+
         
         self.name = f"<{name}>"
         self.assistant_name = f"<{assistant_name}>"
         
-        self.stop_words = ['\n<bot>:', '\n<human>:']
+        self.stop_words = ['\n<human>:','<human>', '<bot>','\n<bot>:' ]
         #self.stop_words = self.change_stop_words(stop_word, self.name)
 
         session_config = SessionConfig(
@@ -28,7 +35,7 @@ class ChainingModel:
             top_p=0.88,
             top_k=1,
             temperature=0.4,
-            max_new_tokens=400,
+            max_new_tokens=200,
             repetition_penalty=1.08,
             repetition_penalty_last_n=1024,
             stop_words=self.stop_words
@@ -94,8 +101,8 @@ class ChainingModel:
             "instruction": input_text
         })
         response = self.chain.generate(prompt)
-        self.memory.add_message(input_text, "<human>")
-        self.memory.add_message(response.choices[0].text.strip(), "<bot>")
+        self.memory.add_message(input_text, "human")
+        self.memory.add_message(response.choices[0].text.strip(), "ai")
         return response.choices[0].text.strip()
 
 

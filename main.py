@@ -14,12 +14,12 @@ import re
 ##### Configuration #####
 # Change the parameters below to use your desired model and customize names
 generator = ChainingModel(
-    model="RedPajama-INCITE-Chat-3B-v1-q5_1.bin", # Replace with your desired model
+    model="RedPajama-INCITE-Chat-3B-v1-q5_1", # Replace with your desired model
     name='andri',  # Replace with your preferred name
     assistant_name='herta')  # Replace with the desired name for the assistant
 
-# Initialize TTS
-ts = tts_infer(model_name='herta')  # Replace with the name of the TTS model you want to use for TTS initialization
+# Initialize VITS
+ts = tts_infer(model_name='herta')  # Replace with the name of the VITS model you want to use for VITS initialization
 
 # Initialize Translator
 tl = translator()

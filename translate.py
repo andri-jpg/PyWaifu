@@ -1,8 +1,9 @@
 import torch
 import pysbd
 import spacy
+from pathlib import Path
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, MarianMTModel, pipeline
-
+from downloader import ModelDownloader
 class translator:
     """
     A class for translating text between English, Japanese, and Indonesian using Hugging Face Transformers.
@@ -23,6 +24,7 @@ class translator:
     id_en(inputs_id): Translates Indonesian text to English.
     """
     def __init__(self, indonesian=False):
+        self.model_download = ModelDownloader()
         use_gpu = torch.cuda.is_available()
         print("Detecting GPU...")
         if use_gpu:
@@ -30,11 +32,16 @@ class translator:
             print("loading translator")
             self.device = torch.device('cuda')
         else:
+            print('Using CPU Only')
             self.device = torch.device('cpu')
-
+        if not Path('fugumt-en-ja').is_dir():
+            self.model_download.install_git_lfs()
+            self.model_download.clone_repository("https://huggingface.co/staka/fugumt-en-ja")
         self.model_jp = pipeline('translation', model='fugumt-en-ja')
-
         if indonesian:
+            if not Path('opus-mt-id-en').is_dir():
+                self.model_download.clone_repository("https://huggingface.co/Helsinki-NLP/opus-mt-id-en")
+                self.model_download.clone_repository("https://huggingface.co/Helsinki-NLP/opus-mt-en-id")
             self.model_id = MarianMTModel.from_pretrained("opus-mt-id-en")
             self.tokenizer_id = AutoTokenizer.from_pretrained("opus-mt-id-en")
             self.model_id = self.model_id.to(self.device)

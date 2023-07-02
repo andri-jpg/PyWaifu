@@ -4,13 +4,15 @@ import math
 import torch
 import commons
 import utils
+from downloader import ModelDownloader
 from models import SynthesizerTrn
 from text.symbols import symbols
 from text import text_to_sequence
 from scipy.io.wavfile import write
+from pathlib import Path
 
 class tts_infer:
-    def __init__(self, model_name='chihiro'):
+    def __init__(self, model_name='herta'):
         """
         Initialize the VITS inference model.
         
@@ -21,8 +23,17 @@ class tts_infer:
         self.model_name = model_name
         self.config_path = "model/config.json"
         self.model_path = f"model/{model_name}.pth"
-        self.hps = utils.get_hparams_from_file(self.config_path)
+        self.model_download = ModelDownloader()
+    
+        os.makedirs("model", exist_ok=True)
 
+        if not Path(self.config_path).is_file():
+            raise FileNotFoundError(f'{self.config_path} not found')
+
+        if not Path(self.model_path).is_file():
+            self.model_download.ask_download(f"https://huggingface.co/spaces/zomehwh/vits-models/resolve/main/pretrained_models/herta/herta.pth", self.model_path)
+            
+        self.hps = utils.get_hparams_from_file(self.config_path)
         if torch.cuda.is_available():
             self.device = torch.device("cuda")
             self.net_g = SynthesizerTrn(

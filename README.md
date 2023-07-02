@@ -47,6 +47,11 @@ Note: You will be prompted to download the suggested model when running `main.py
 - You can now enter your input in the text box.
 - You can change the VITS model by replacing the `herta.pth` and `config.json` files in the `model` folder.
 
+## Todo:
+- Use pygame for the user interface.
+- Implement visual novel-like interaction.
+- Add 2D characters that can change emotions to make conversations more lifelike.
+  
 ## Credits:
 - [llm-rs](https://github.com/LLukas22/llm-rs-python)
 - [vits-finetuning](https://github.com/SayaSS/vits-finetuning)

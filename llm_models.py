@@ -1,14 +1,19 @@
+from pathlib import Path
 from llm_rs.langchain import RustformersLLM
 from llm_rs import Bloom, SessionConfig, GenerationConfig, ContainerType, QuantizationType
 from langchain import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from pathlib import Path
 class ChainingModel:
     def __init__(self, model, name, assistant_name):
         self.model = model
-        self.name = name
-        self.assistant_name = assistant_name
+        if not Path(model).is_file():
+            raise Exception("Large language Model not found on PyWaifu folder.")
+        
+        self.name = f"<{name}>"
+        self.assistant_name = f"<{assistant_name}>"
         
         self.stop_words = ['\n<bot>:', '\n<human>:']
         #self.stop_words = self.change_stop_words(stop_word, self.name)

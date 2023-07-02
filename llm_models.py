@@ -48,8 +48,6 @@ class ChainingModel:
         <bot>: Yes, I am a computer program.
         <human>: you know about coding?
         <bot>: Yes, I know about coding.
-        <human>: i use python language to made you
-        <bot>: Thank you.
         <human>: you know why i made you?
         <bot>: Because you want to talk with me.
         <human>: {instruction}
@@ -92,7 +90,7 @@ class ChainingModel:
         })
         response = self.chain.generate(prompt)
         self.memory.add_message(input_text, "<human>")
-        self.memory.add_message(response.choices[0].text.strip(), "ai")
+        self.memory.add_message(response.choices[0].text.strip(), "<bot>")
         return response.choices[0].text.strip()
 
 

@@ -1,47 +1,30 @@
 import time
+import PySimpleGUIQt as sg
 import numpy as np
 from tts import tts_infer
 from translate import translator
-from selenium import webdriver
-from selenium.webdriver.common.by import By
+from llm_models import ChainingModel
 import pyaudio
 import soundfile as sf
 import scipy.io.wavfile as wavfile
 import logging
-from selenium.webdriver.remote.remote_connection import LOGGER
+import os
+import re
 
-# Set logging level to warning
-LOGGER.setLevel(logging.WARNING)
+##### Configuration #####
+# Change the parameters below to use your desired model and customize names
+generator = ChainingModel(
+    model="RedPajama-INCITE-Chat-3B-v1-q5_1.bin", # Replace with the name of your desired model
+    name='<andri>',  # Replace with your preferred name
+    assistant_name='<herta>')  # Replace with the desired name for the assistant 
 
-# Initialize text-to-speech model
-ts = tts_infer(model_name='chihiro') # change model_name to .pth file in model folder
+# Initialize TTS
+ts = tts_infer(model_name='herta')  # Replace with the name of the TTS model you want to use for TTS initialization
 
-# Initialize translator
-tl = translator()
+# Initialize Translator
+tl = translator(indonesian=False)
 
-# Initialize Selenium Chrome driver and load koboldcpp
-driver = webdriver.Chrome()
-page = "http://localhost:5001/#"
-driver.get(page)
-
-# clean text by removing line breaks
-def cleaner(text):
-    if text is None:
-        return None
-    else :
-        return text.split('\n')[-1]
-
-def get_answer():
-    ans=driver.find_elements(By.TAG_NAME, 'p')
-    line = []
-    for i in ans:
-        line.append(i)
-    if not line:
-        return None
-    answer = line[-1].text
-    return answer
-
-# play audio
+##### Main #####
 
 p = pyaudio.PyAudio()
 
@@ -58,6 +41,7 @@ output_device_info = p.get_device_info_by_index(output_device_index)
 
 output_device_index2 = int(input("Enter the index of the output device: "))
 output_device_info2 = p.get_device_info_by_index(output_device_index2)
+
 def play_audio():
     filename = 'dialog.wav'
     data, samplerate = sf.read(filename, dtype='float32')
@@ -90,56 +74,63 @@ def play_audio():
     stream_s.stop_stream()
     stream.close()
     stream_s.close()
-    
-# Initialize flag to check if chatbot is busy generating response
-if_busy = False
 
-# Main loop
+def clean_res(result, words_to_clean):
+    cleaned_result = result
+    for word in words_to_clean:
+        cleaned_result = cleaned_result.replace(word, "")
+    return cleaned_result
+
+# Tema antarmuka pengguna
+sg.theme("DarkGrey2")
+
+# Tampilan antarmuka pengguna
+layout = [
+    [sg.Text("Input:", size=(8, 1)), sg.Input(key="-INPUT-", size=(30, 1), enable_events=True, return_keyboard_events=True),sg.Button("Submit")],
+    [sg.Text("Result: ")],
+    [sg.Multiline("", key="-OUTPUT-", size=(80, 20), background_color="white", text_color="black")]
+]
+
+
+# Membuat window
+window = sg.Window("Kuru kuru 😂", layout)
+
 while True:
-    # Check if chatbot is currently generating a response
-    generating = driver.find_elements(By.CLASS_NAME,'hidden')
-    
-    if len(generating) < 31:
-        if_busy = True
-        #print("generating")
-    else:
-        if_busy = False
+    event, values = window.read()
 
-    time.sleep(0.01)
+    if event == sg.WINDOW_CLOSED:
+        break
 
-    # If chatbot is busy generating response, continue loop
-    if if_busy:
-        continue
-    else:
-        # Get English response from chat application
-        en_answer = cleaner(get_answer())
+    if event == "Submit" or event == "\r":  # Jika tombol "Submit" atau tombol Enter ditekan
+        user_input = values["-INPUT-"]
+        user_input = tl.id_en(user_input)
 
-        # Translate English response to Japanese
+        if user_input.lower() == "exit":
+            break
+
+        result = generator.chain(user_input)
+        result = result["text"]
+        words_to_clean = ["\n<human", "\n<bot"]
+
+        en_answer = clean_res(result, words_to_clean)
         jp_answer = tl.en_jp(en_answer)
+        id_result = tl.en_id(en_answer)
 
-
-
-        # If chatbot has just been loaded, prompt user to load configuration
-        if jp_answer is None:
-            print("You are just starting the model, please load the config first")
-            user_input = input("Press the Enter key when the config is loaded or type 'exit' to exit: ")
-            if user_input.lower() == 'exit':
-                break
-
-        # Get text input field and send user input
-        text_input = driver.find_element(By.XPATH, '//*[@id="cht_inp"]')
-        text_input.click()
-        # Convert Japanese response to speech and play audio
         ts.convert(jp_answer)
-        os.system('cls')
-        print(en_answer)
+
+        if "```python" in en_answer:
+            code_match = re.search(r"```python(.+?)```", en_answer, re.DOTALL)
+            if code_match:
+                code = code_match.group(1).strip()
+                window["-OUTPUT-"].update(id_result, font=("Courier New", 11), background_color="black",
+                                          text_color="white")
+        else:
+            window["-OUTPUT-"].update(id_result, font=("Arial", 11), background_color="white", text_color="black")
+
+        window.refresh()  # Memastikan tampilan terbaru ditampilkan
+        window["-INPUT-"].update("")  # Menghapus teks pada kotak input
+
         if jp_answer is not None:
             play_audio()
-        user_input = input("Enter input, type 'exit' to exit: ")
-        if user_input.lower() == 'exit':
-            break
-        text_input.send_keys(user_input)
-        text_input.send_keys('\ue007')
-        print("processing.....")
 
-
+window.close()

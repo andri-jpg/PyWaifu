@@ -5,7 +5,7 @@ PyWaifu is an all-in-one pipeline designed to facilitate seamless interactions w
 
 PyWaifu runs offline on your PC and requires at least 4GB VRAM of an NVIDIA GPU and 6GB of RAM (in GPU mode) or 8GB of RAM (in CPU mode).
 
-src/example.mp4
+https://github.com/andri-jpg/PyWaifu/assets/91838310/b24ef215-9011-4629-b5d1-920d50ff5c84
 
 ## Requirements:
 - Git
@@ -38,7 +38,7 @@ src/example.mp4
   python main.py
 
   # For Indonesian mode
-  python main_indonesia.py
+  python main_indonesian.py
   ```
 
 Note: You will be prompted to download the suggested model when running `main.py`. It is recommended to enter 'y' for all questions if you are unsure.

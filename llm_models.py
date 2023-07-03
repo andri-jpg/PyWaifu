@@ -26,7 +26,7 @@ class ChainingModel:
         #self.stop_words = self.change_stop_words(stop_word, self.name)
 
         session_config = SessionConfig(
-            threads=4,
+            threads=2,
             context_length=800,
             prefer_mmap=False
         )

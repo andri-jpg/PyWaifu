@@ -65,6 +65,7 @@ Note: You will be prompted to download the suggested model when running `main.py
   
 ## Credits:
 - [@Zr6Ov](https://twitter.com/Zr6Ov)
+- [zomehwh](https://huggingface.co/spaces/zomehwh/vits-models)
 - [llm-rs](https://github.com/LLukas22/llm-rs-python)
 - [vits-finetuning](https://github.com/SayaSS/vits-finetuning)
 - [Helsinki-NLP](https://huggingface.co/Helsinki-NLP)

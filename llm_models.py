@@ -1,7 +1,7 @@
 from pathlib import Path
 from downloader import ModelDownloader
 from llm_rs.langchain import RustformersLLM
-from llm_rs import Bloom, SessionConfig, GenerationConfig, ContainerType, QuantizationType
+from llm_rs import Bloom, SessionConfig, GenerationConfig, ContainerType, QuantizationType, Precision
 from langchain import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory

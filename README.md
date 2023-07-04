@@ -10,6 +10,8 @@ PyWaifu is an all-in-one pipeline designed to facilitate seamless interactions w
 
 PyWaifu runs offline on your PC and requires at least 4GB VRAM of an NVIDIA GPU and 6GB of RAM (in GPU mode) or 8GB of RAM (in CPU mode).
 
+## The anime character illustrations used in this project are provided by @Zr6Ov through Picrew. <br> Twitter: [@Zr6Ov](https://twitter.com/Zr6Ov) <br> Picrew Profile Link: [✦絢瀬](https://picrew.me/en/search/creator?crid=1560771)
+
 *Sound on 🔊
 
 https://github.com/andri-jpg/PyWaifu/assets/91838310/b24ef215-9011-4629-b5d1-920d50ff5c84
@@ -55,11 +57,15 @@ Note: You will be prompted to download the suggested model when running `main.py
 - You can change the VITS model by replacing the `herta.pth` and `config.json` files in the `model` folder.
 
 ## Todo:
-- Use pygame for the user interface.
-- Implement visual novel-like interaction.
-- Add 2D characters that can change emotions to make conversations more lifelike.
+- Implement threading and optimize the code for better performance.
+- Polish the graphical user interface (GUI) to enhance the visual appeal and user experience.
+- Add more customization options to allow users to personalize the application according to their preferences.
+- Incorporate animation into the GUI to make it more dynamic and engaging.
+- Create an executable binary of the project using PyInstaller for easy distribution and deployment.
   
 ## Credits:
+- [@Zr6Ov](https://twitter.com/Zr6Ov)
+- [zomehwh](https://huggingface.co/spaces/zomehwh/vits-models)
 - [llm-rs](https://github.com/LLukas22/llm-rs-python)
 - [vits-finetuning](https://github.com/SayaSS/vits-finetuning)
 - [Helsinki-NLP](https://huggingface.co/Helsinki-NLP)

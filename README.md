@@ -1,61 +1,67 @@
-# AI-Waifu-mini
+<div align="center">
+<h1>PyWaifu: Virtual Anime Waifu Interaction Pipeline</h1>
+  
+[![madewithlove](https://forthebadge.com/images/badges/built-with-love.svg)](https://github.com/andri-jpg/PyWaifu)
 
-# Readme in progress
-All of this run on your local PC
-need atleast 4gb vram of nvidia gpu and 12gb ram(GPU mode)
-or 16 gb ram(CPU mode)
-## Requirements
-- git
-- python > 3.7 <=3.10
-- Veadotube mini [Download](https://olmewe.itch.io/veadotube-mini?download)
-- Virtual audio cable, We recommend using VB-CABLE as a virtual cable solution [VB-cable](https://vb-audio.com/Cable/index.htm)
-- Google Chrome [Download](https://www.google.com/chrome/)
+</div>
 
-## Installation
-- Make sure you have Installed C/C++ build tools and have Cmake installed 
-- Make sure to have [GIT LFS](https://git-lfs.com/) Installed to handle large file download in git
-- clone the repo & install packages
-- venv or miniconda(optional but strongly recommended, because I haven't cleaned up some unused dependencies)
-```bash
-git clone https://github.com/andri-jpg/AIwaifu-mini.git
-cd ./AIwaifu-mini
-```
+## Description:
+PyWaifu is an all-in-one pipeline designed to facilitate seamless interactions with virtual anime waifus through Text-to-Speech (TTS), language modeling, and translation capabilities. The primary objective of this project is to enable users to engage in immersive and lifelike conversations with their favorite virtual anime waifus. With PyWaifu, users can generate natural-sounding speech from text inputs, engage in interactive dialogues using advanced language models, and even translate their conversations into different languages. This unique integration of TTS, language modeling, and translation technologies brings a whole new level of interactivity and enjoyment to the anime fandom, providing users with an unforgettable experience of communicating with their cherished virtual companions.
 
-```bash
-pip install -r ./requirements.txt
+PyWaifu runs offline on your PC and requires at least 4GB VRAM of an NVIDIA GPU and 6GB of RAM (in GPU mode) or 8GB of RAM (in CPU mode).
 
-# You need to install the monotonic_align module for vits to work
-cd monotonic_align
-python setup.py build_ext --inplace
-```
+*Sound on 🔊
 
-```bash
-# Download model
-python download_model.py
-# Note : this will run multiple terminal
-```
-## Usage
-- Run kobold.bat
-- Wait for terminal show localhost:5001
-- Run veadotube mini
-- Load your own png or use default for testing
-- Run main.py
-```bash
-# for default mode
-python main.py
-# for indonesian mode
-python main_indonesia.py
-```
-- Wait for chrome windows run
-- Click on load and select chat_config.json
-- Minimize chrome
-- Choose your virtual mic and output device index on terminal
-- Press enter on terminal
-- Now you can send your input from terminal.
-- You can change your vits model in model folder, replace chihiro.pth and config.json
-# Credit
-[GPT-J_GGML](https://huggingface.co/Kastor/GPT-J-6B-Pygway-ggml-q4_1)
-[vits-finetuning](https://github.com/SayaSS/vits-finetuning)
-[Koboldcpp](https://github.com/LostRuins/koboldcpp)
-[Helsinki-NLP](https://huggingface.co/Helsinki-NLP)
-[staka/fugumt](https://huggingface.co/staka/fugumt-ja-en)
+https://github.com/andri-jpg/PyWaifu/assets/91838310/b24ef215-9011-4629-b5d1-920d50ff5c84
+
+## Requirements:
+- Git
+- Python 3.9.16 (recommended)
+
+## Installation:
+- Make sure you have installed C/C++ build tools and have CMake installed.
+- Set up a virtual environment (venv) or install Miniconda (optional but strongly recommended).
+- Clone the repository:
+  ```bash
+  git clone https://github.com/andri-jpg/PyWaifu
+  cd PyWaifu
+  ```
+- Install the required packages:
+  ```bash
+  pip install -r requirements.txt
+
+  cd monotonic_align
+  python setup.py build_ext --inplace
+  ```
+- If you are using an NVIDIA GPU, run the following command:
+  ```bash
+  pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
+  ```
+
+## Usage:
+- Run `main.py`:
+  ```bash
+  # For the default mode
+  python main.py
+
+  # For Indonesian mode
+  python main_indonesian.py
+  ```
+
+Note: You will be prompted to download the suggested model when running `main.py`. It is recommended to enter 'y' for all questions if you are unsure.
+
+- The PyWaifu window will appear.
+- You can now enter your input in the text box.
+- You can change the VITS model by replacing the `herta.pth` and `config.json` files in the `model` folder.
+
+## Todo:
+- Use pygame for the user interface.
+- Implement visual novel-like interaction.
+- Add 2D characters that can change emotions to make conversations more lifelike.
+  
+## Credits:
+- [llm-rs](https://github.com/LLukas22/llm-rs-python)
+- [vits-finetuning](https://github.com/SayaSS/vits-finetuning)
+- [Helsinki-NLP](https://huggingface.co/Helsinki-NLP)
+- [staka/fugumt](https://huggingface.co/staka/fugumt-ja-en)
+- [rustformers](https://github.com/rustformers/llm)

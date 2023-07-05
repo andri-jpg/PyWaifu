@@ -27,3 +27,5 @@ tensorboard
 unidecode
 tqdm
 pyaudio
+pygame
+pygame_gui

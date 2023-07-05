@@ -6,13 +6,23 @@
 </div>
 
 ## Description:
-PyWaifu is an all-in-one pipeline designed to facilitate seamless interactions with virtual anime waifus through Text-to-Speech (TTS), language modeling, and translation capabilities. The primary objective of this project is to enable users to engage in immersive and lifelike conversations with their favorite virtual anime waifus. With PyWaifu, users can generate natural-sounding speech from text inputs, engage in interactive dialogues using advanced language models, and even translate their conversations into different languages. This unique integration of TTS, language modeling, and translation technologies brings a whole new level of interactivity and enjoyment to the anime fandom, providing users with an unforgettable experience of communicating with their cherished virtual companions.
+PyWaifu is an all-in-one pipeline designed to facilitate seamless interactions with virtual anime waifus through Text-to-Speech (TTS), language modeling, and translation capabilities. The primary objective of this project is to enable users to engage in immersive and lifelike conversations with their favorite virtual anime waifus. With PyWaifu, users can generate natural-sounding speech from text inputs, understand the emotional expressions of generated text, easily customize the system, and even translate their conversations into different languages. This unique integration of TTS, language modeling, and translation technologies brings a whole new level of interactivity and enjoyment to the anime fandom, providing users with an unforgettable experience of communicating with their cherished virtual companions.
 
 PyWaifu runs offline on your PC and requires at least 4GB VRAM of an NVIDIA GPU and 6GB of RAM (in GPU mode) or 8GB of RAM (in CPU mode).
 
+## The anime character illustrations used in this project are provided by @Zr6Ov through Picrew. <br> Twitter: [@Zr6Ov](https://twitter.com/Zr6Ov) <br> Picrew Profile Link: [✦絢瀬](https://picrew.me/en/search/creator?crid=1560771)
+
 *Sound on 🔊
 
-https://github.com/andri-jpg/PyWaifu/assets/91838310/b24ef215-9011-4629-b5d1-920d50ff5c84
+https://github.com/andri-jpg/PyWaifu/assets/91838310/05ed2c6d-498b-4a11-a7e7-afb5376cb8ff
+
+## Features:
+- Text-to-Speech (TTS) conversion
+- Emotion understanding: PyWaifu can analyze the emotional expressions conveyed in the generated text, allowing for a more engaging and dynamic interaction.
+- Customizability: Easily customize and personalize the PyWaifu system according to your preferences, making the experience truly unique.
+- Translation capabilities: Translate conversations with your virtual waifu into different languages, broadening the reach and accessibility of your interactions.
+- User-friendly interface: PyWaifu provides a graphical user interface (GUI) for easy interaction
+- Offline: PyWaifu runs locally on your PC, without the need for an internet connection.
 
 ## Requirements:
 - Git
@@ -33,7 +43,7 @@ https://github.com/andri-jpg/PyWaifu/assets/91838310/b24ef215-9011-4629-b5d1-920
   cd monotonic_align
   python setup.py build_ext --inplace
   ```
-- If you are using an NVIDIA GPU, run the following command:
+- If you are using an NVIDIA GPU, run the following command (experimental):
   ```bash
   pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu117
   ```
@@ -55,11 +65,18 @@ Note: You will be prompted to download the suggested model when running `main.py
 - You can change the VITS model by replacing the `herta.pth` and `config.json` files in the `model` folder.
 
 ## Todo:
-- Use pygame for the user interface.
-- Implement visual novel-like interaction.
-- Add 2D characters that can change emotions to make conversations more lifelike.
-  
+- Implement threading and optimize the code for better performance.
+- Polish the graphical user interface (GUI) to enhance the visual appeal and user experience.
+- Add more customization options to allow users to personalize the application according to their preferences.
+- Incorporate animation into the GUI to make it more dynamic and engaging.
+- Create an executable binary of the project using PyInstaller for easy distribution and deployment.
+
+## Your feedback is valuable and contributions through pull requests are welcomed to make this project even better.
+
 ## Credits:
+- [pysentimentio](https://github.com/pysentimiento)
+- [@Zr6Ov](https://twitter.com/Zr6Ov)
+- [zomehwh](https://huggingface.co/spaces/zomehwh/vits-models)
 - [llm-rs](https://github.com/LLukas22/llm-rs-python)
 - [vits-finetuning](https://github.com/SayaSS/vits-finetuning)
 - [Helsinki-NLP](https://huggingface.co/Helsinki-NLP)

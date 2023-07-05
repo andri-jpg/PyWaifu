@@ -22,7 +22,7 @@ class ChainingModel:
         self.name = f"<{name}>"
         self.assistant_name = f"<{assistant_name}>"
         
-        self.stop_words = ['\n<human>:','<human>', '<bot>','\n<bot>:' ]
+        self.stop_words = ['\n<human>:','<human>','Human' '<bot>','\n<bot>:' ]
         #self.stop_words = self.change_stop_words(stop_word, self.name)
 
         session_config = SessionConfig(
@@ -35,7 +35,7 @@ class ChainingModel:
             top_p=0.88,
             top_k=1,
             temperature=0.4,
-            max_new_tokens=200,
+            max_new_tokens=100,
             repetition_penalty=1.08,
             repetition_penalty_last_n=1024,
             stop_words=self.stop_words

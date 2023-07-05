@@ -39,9 +39,7 @@ https://github.com/andri-jpg/PyWaifu/assets/91838310/05ed2c6d-498b-4a11-a7e7-afb
 - Install the required packages:
   ```bash
   pip install -r requirements.txt
-
-  cd monotonic_align
-  python setup.py build_ext --inplace
+  
   ```
 - If you are using an NVIDIA GPU, run the following command (experimental):
   ```bash

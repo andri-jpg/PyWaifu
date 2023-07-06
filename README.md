@@ -67,6 +67,8 @@ Note: You will be prompted to download the suggested model when running `main.py
 
 ## Your feedback is valuable and contributions through pull requests are welcomed to make this project even better.
 
+[![buymekofi](src/kofi.png)](https://ko-fi.com/andrilawrence#)
+
 ## Credits:
 - [pysentimentio](https://github.com/pysentimiento)
 - [@Zr6Ov](https://twitter.com/Zr6Ov)

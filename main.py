@@ -2,6 +2,7 @@ import pygame
 import pygame_gui
 from pygame_gui.elements import UIWindow, UIPanel, UITextBox, UITextEntryLine, UIButton, UIImage
 import time
+import json
 import numpy as np
 import pyaudio
 import random
@@ -12,21 +13,21 @@ from llm_models import ChainingModel
 import threading
 from pysentimiento import create_analyzer
 
-##### Configuration #####
-# Change the parameters below to use your desired model and customize names
+with open('config.json') as user_config:
+    configs = json.load(user_config)
+
+name=configs['user_name']  
+assistant_name=configs['bot_name']
+
 generator = ChainingModel(
-    model="RedPajama-INCITE-Chat-3B-v1-q5_1",  # Replace with your desired model
-    name='andri',  # Replace with your preferred name
-    assistant_name='herta'  # Replace with the desired name for the assistant
+    model=configs['model_name'],
+    name=name,  
+    assistant_name=assistant_name  
 )
 
-# Initialize VITS
-ts = tts_infer(model_name='herta')  # Replace with the name of the VITS model you want to use for VITS initialization
+ts = tts_infer(model_name=configs['vits_model']) 
+tl = translator(indonesian=True)
 
-# Initialize Translator
-tl = translator()
-
-##### Main #####
 
 pygame.init()
 pygame.display.set_caption('PyWaifu')
@@ -36,6 +37,17 @@ manager = pygame_gui.UIManager((800, 600))
 background = pygame.Surface((800, 600))
 background.fill(pygame.Color('#cc8890'))
 words_to_clean = ["\n<human", "\n<bot"]
+
+def change_words(words, name, assistant_name):
+    new_words = []
+    for word in words:
+        new_word = word.replace('human', name)
+        new_words.append(new_word)
+        new_word = word.replace('bot', assistant_name)
+        new_words.append(new_word)
+    return new_words
+
+words_clean = change_words(words_to_clean, name, assistant_name)
 
 def play_audio(callback):
     
@@ -63,7 +75,7 @@ def play_audio(callback):
         
 def clean_res(result, words_to_clean):
     cleaned_result = result
-    for word in words_to_clean:
+    for word in words_clean:
         cleaned_result = cleaned_result.replace(word, "")
     return cleaned_result
 
@@ -75,10 +87,10 @@ class OutputText:
         self.text = pygame_gui.elements.UITextBox(html_text=result,
                                                   relative_rect=pygame.Rect((0, 500), (700, 100)),
                                                   manager=self.manager)
-        '''
+        
         self.text.set_active_effect(pygame_gui.TEXT_EFFECT_TYPING_APPEAR,
                                     params={'time_per_letter': 0.001,
-                                            'time_per_letter_deviation': 0.01})'''
+                                            'time_per_letter_deviation': 0.01})
     def generating(self):
         self.text = pygame_gui.elements.UITextBox(html_text='Generating.....',
                                                   relative_rect=pygame.Rect((0, 500), (700, 100)),
@@ -143,7 +155,6 @@ def pipeline(user_input):
         def callback():
             if emotion in emotion_images:
                 panel_image(emotion_images[emotion])
-            output_text.generated_text(en_answer)
             text_box.enable()
             
         threading.Thread(target=play_audio, args=(callback,)).start()

@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 from downloader import ModelDownloader
 from llm_rs.langchain import RustformersLLM
@@ -7,9 +8,12 @@ from langchain.chains import LLMChain
 from langchain.memory import ConversationBufferMemory
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from pathlib import Path
+
 class ChainingModel:
     def __init__(self, model, name, assistant_name):
         self.model_download = ModelDownloader()
+        with open('config.json') as self.configuration:
+            self.user_config = json.load(self.configuration)
         meta = f"{model}.meta"
         model = f"{model}.bin"
         self.model = model
@@ -18,52 +22,30 @@ class ChainingModel:
         if not Path(meta).is_file():
             self.model_download.ask_download(f"https://huggingface.co/rustformers/redpajama-3b-ggml/resolve/main/RedPajama-INCITE-Chat-3B-v1-q5_1.meta", meta)
 
+        self.name = name
+        self.assistant_name = assistant_name
+        self.names = f"<{name}>"
+        self.assistant_names = f"<{assistant_name}>"
         
-        self.name = f"<{name}>"
-        self.assistant_name = f"<{assistant_name}>"
-        
-        self.stop_words = ['\n<human>:','<human>','Human' '<bot>','\n<bot>:' ]
-        #self.stop_words = self.change_stop_words(stop_word, self.name)
-
+        self.stop_word = ['\n<human>:','<human>', '<bot>','\n<bot>:' ]
+        self.stop_words = self.change_stop_words(self.stop_word, self.name, self.assistant_name)
         session_config = SessionConfig(
-            threads=2,
-            context_length=800,
-            prefer_mmap=False
+            threads=self.user_config['threads'],
+            context_length=self.user_config['context_length'],
+            prefer_mmap=self.user_config['prefer_mmap']
         )
 
         generation_config = GenerationConfig(
-            top_p=0.88,
-            top_k=1,
-            temperature=0.4,
-            max_new_tokens=100,
-            repetition_penalty=1.08,
-            repetition_penalty_last_n=1024,
+            top_p=self.user_config['top_p'],
+            top_k=self.user_config['top_k'],
+            temperature=self.user_config['temperature'],
+            max_new_tokens=self.user_config['max_new_tokens'],
+            repetition_penalty=self.user_config['repetition_penalty'],
+            repetition_penalty_last_n=self.user_config['repetition_penalty_last_n'],
             stop_words=self.stop_words
         )
 
-        template = """bot is a large language model trained by human.
-        bot is designed to be able to assist with a wide range of tasks, from answering simple questions to providing in-depth explanations and discussions on a wide range of topics. As a language model, bot is able to generate human-like text based on the input it receives, allowing it to engage in natural-sounding conversations and provide responses that are coherent and relevant to the topic at hand.
-        Overall, bot is a powerful tool that can help with a wide range of tasks and provide valuable insights and information on a wide range of topics. Whether you need help with a specific question or just want to have a conversation about a particular topic, bot is here to assist.]
-
-        {chat_history}
-        <human>: Which is heavier, a duck or a car?
-        <bot>: A car weighs around 1300 kilograms, while a duck only weighs about 2 kilograms. Therefore, a car is heavier than a duck.
-        <human>: what is neural network?
-        <bot>: Neural networks are artificial intelligence programs that mimic the human brain.
-        <human>: i will tell you a fact, you are neural networks run on my computer
-        <bot>: I am neural networks run on your computer.
-        <human>: repeat this sentence \"my master name is human\"
-        <bot>: My master name is human.
-        <human>: who is your master?
-        <bot>: My master is human.
-        <human>: human is a person that using a computer, and you is a computer program
-        <bot>: Yes, I am a computer program.
-        <human>: you know about coding?
-        <bot>: Yes, I know about coding.
-        <human>: you know why i made you?
-        <bot>: Because you want to talk with me.
-        <human>: {instruction}
-        <bot>:"""
+        template = self.user_config['template']
 
         self.template = self.change_names(template, self.assistant_name, self.name)
         self.prompt = PromptTemplate(
@@ -81,18 +63,20 @@ class ChainingModel:
 
         self.chain = LLMChain(llm=self.llm, prompt=self.prompt, memory=self.memory)
 
-    '''@staticmethod
-    def change_stop_words(stop_words, name):
+    @staticmethod
+    def change_stop_words(stop_words, name, assistant_name):
         new_stop_words = []
         for word in stop_words:
-            new_word = word.replace('<human>:', name + ':')
+            new_word = word.replace('bot', assistant_name)
             new_stop_words.append(new_word)
-        return new_stop_words'''
+            new_word2 = word.replace('human', name)
+            new_stop_words.append(new_word2)
+        return new_stop_words
 
     @staticmethod
     def change_names(template, assistant_name, user_name):
-        template = template.replace("<bot>", assistant_name)
-        template = template.replace("<human>", user_name)
+        template = template.replace("bot", assistant_name)
+        template = template.replace("human", user_name)
         return template
 
     def chain(self, input_text):

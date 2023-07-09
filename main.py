@@ -26,7 +26,7 @@ generator = ChainingModel(
 )
 
 ts = tts_infer(model_name=configs['vits_model']) 
-tl = translator(indonesian=True)
+tl = translator(indonesian=False)
 
 
 pygame.init()

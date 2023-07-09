@@ -1,0 +1,1 @@
+{"normalization": false, "bos_token": "<s>", "eos_token": "</s>", "sep_token": "</s>", "cls_token": "<s>", "unk_token": "<unk>", "pad_token": "<pad>", "mask_token": "<mask>", "model_max_length": 128, "special_tokens_map_file": null, "tokenizer_file": null, "name_or_path": "vinai/bertweet-base"}

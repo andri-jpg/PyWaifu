@@ -34,10 +34,11 @@ class translator:
         else:
             print('Using CPU Only')
             self.device = torch.device('cpu')
+    
         if not Path('fugumt-en-ja').is_dir():
             self.model_download.install_git_lfs()
             self.model_download.clone_repository("https://huggingface.co/staka/fugumt-en-ja")
-            self.model_download.clone_repository("https://huggingface.co/finiteautomata/bertweet-base-emotion-analysis")
+            self.model_download.download_file("https://huggingface.co/finiteautomata/bertweet-base-emotion-analysis/resolve/main/pytorch_model.bin", 'bertweet-base-emotion-analysis/pytorch_model.bin')
         self.model_jp = pipeline('translation', model='fugumt-en-ja')
         if indonesian:
             if not Path('opus-mt-id-en').is_dir():

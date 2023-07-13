@@ -5,6 +5,8 @@
 
 </div>
 
+Simple UI web based version [chatwaifu](https://github.com/andri-jpg/chatwaifu)
+
 ## Description:
 PyWaifu is an all-in-one pipeline designed to facilitate seamless interactions with virtual anime waifus through Text-to-Speech (TTS), language modeling, and translation capabilities. The primary objective of this project is to enable users to engage in immersive and lifelike conversations with their favorite virtual anime waifus. With PyWaifu, users can generate natural-sounding speech from text inputs, understand the emotional expressions of generated text, easily customize the system, and even translate their conversations into different languages. This unique integration of TTS, language modeling, and translation technologies brings a whole new level of interactivity and enjoyment to the anime fandom, providing users with an unforgettable experience of communicating with their cherished virtual companions.
 

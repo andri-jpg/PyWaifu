@@ -1,7 +1,5 @@
 <div align="center">
 <h1>PyWaifu: Virtual Anime Waifu Interaction Pipeline</h1>
-  
-[![madewithlove](https://forthebadge.com/images/badges/built-with-love.svg)](https://github.com/andri-jpg/PyWaifu)
 
 </div>
 
@@ -69,7 +67,7 @@ Note: You will be prompted to download the suggested model when running `main.py
 
 ## Your feedback is valuable and contributions through pull requests are welcomed to make this project even better.
 
-[![buymekofi](src/kofi.png)](https://ko-fi.com/andrilawrence#)
+[![Star History Chart](https://api.star-history.com/svg?repos=andri-jpg/PyWaifu&type=Date)](https://star-history.com/#andri-jpg/PyWaifu&Date)
 
 ## Credits:
 - [pysentimentio](https://github.com/pysentimiento)
